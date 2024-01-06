@@ -1,0 +1,19 @@
+<body>
+  <li> <a href="https://www.luogu.com.cn/users/377153">MyLuogu</a> </li>
+<code markdown>
+# flowing's wiki
+  ## Welcome to flowing's wiki
+  ## Developers
+    - ChinaFlowingBoat
+  ![](https://cdn.luogu.com.cn/upload/image_hosting/ee1su203.png)
+  ## Menu
+    - A+B Problems
+</code>
+<script src="https://cdn.jsdelivr.net/npm/marked@3.0.0/marked.min.js"></script>
+<script>
+var m=document.querySelectorAll('code[markdown]');
+for(var i=0;i<m.length;i++){
+m[i].outerHTML='<div>'+marked(m[i].innerHTML)+'</div>';
+}
+</script>
+</body>
