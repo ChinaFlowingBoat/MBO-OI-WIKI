@@ -1,9 +1,179 @@
 <html>
-  <body background="https://raw.githubusercontent.com/ChinaFlowingBoat/Middle-class-Bread-Group/main/images/sumlvasi.png" style="background-repeat:no-repeat background-attachment:fixed;background-size:100% 100%; ">
+  <body background="https://cdn.luogu.com.cn/upload/image_hosting/e3cijroz.png" style="background-repeat:no-repeat background-attachment:fixed;background-size:100% 100%; ">
   <img src='https://cdn.luogu.com.cn/upload/image_hosting/ee1su203.png' align='center' style="border-radius:3px; box-shadow:rgba(0,0,0,0.15) 0 0 8px;background:#FBFBFB;border:1px solid #ddd;margin:10px auto;margin-left: 15px;padding:5px;">
     <code markdown>
-  # Welcome to Middle-Class Bread Grou
-    
+   # $\tt{Welcome\ to\ Middle-Class\ Bread\ Organzine}$
+   > ### Who are you? 
+   > - We're a organzine that want to give any people OI education.
+   > ### What's this page.
+   > - a wiki just like OI-WIKI
+   > - We usually write something about OI on this page.
+   > ### Can I join in this organzine?
+   > - No, We are the oier of China.
+  </code>
+  <code markdown>
+   ## $\tt{Cutting Block}$
+    - [块状链表](https://www.luogu.com.cn/problem/P4278)
+    ```cpp
+    #include<bits/stdc++.h>
+#define REP(i, l, r) for(int i=l;i<=r;++i)
+using namespace std;
+typedef long long ll;
+typedef unsigned long long ull;
+namespace fast_IO {
+#define FASTIO
+#define IOSIZE 100000
+    char ibuf[IOSIZE], obuf[IOSIZE];
+    char *p1 = ibuf, *p2 = ibuf, *p3 = obuf;
+#ifdef ONLINE_JUDGE
+#define getchar()((p1==p2)and(p2=(p1=ibuf)+fread(ibuf,1,IOSIZE,stdin),p1==p2)?(EOF):(*p1++))
+#define putchar(x)((p3==obuf+IOSIZE)&&(fwrite(obuf,p3-obuf,1,stdout),p3=obuf),*p3++=x)
+#endif
+#define isdigit(ch)(ch>47&&ch<58)
+#define isspace(ch)(ch<33)
+
+    template<typename T>
+    inline T read() {
+        T s = 0;
+        int w = 1;
+        char ch;
+        while (ch = getchar(), !isdigit(ch) and (ch != EOF))if (ch == '-')w = -1;
+        if (ch == EOF)return false;
+        while (isdigit(ch))s = s * 10 + ch - 48, ch = getchar();
+        return s * w;
+    }
+
+    template<typename T>
+    inline bool read(T &s) {
+        s = 0;
+        int w = 1;
+        char ch;
+        while (ch = getchar(), !isdigit(ch) and (ch != EOF))if (ch == '-')w = -1;
+        if (ch == EOF)return false;
+        while (isdigit(ch))s = s * 10 + ch - 48, ch = getchar();
+        return s *= w, true;
+    }
+
+    inline bool read(char &s) {
+        while (s = getchar(), isspace(s));
+        return true;
+    }
+
+    inline bool read(char *s) {
+        char ch;
+        while (ch = getchar(), isspace(ch));
+        if (ch == EOF)return false;
+        while (!isspace(ch))*s++ = ch, ch = getchar();
+        *s = '\000';
+        return true;
+    }
+
+    template<typename T>
+    inline void print(T x) {
+        if (x < 0)putchar('-'), x = -x;
+        if (x > 9)print(x / 10);
+        putchar(x % 10 + 48);
+    }
+
+    inline void print(char x) { putchar(x); }
+
+    inline void print(char *x) { while (*x)putchar(*x++); }
+
+    inline void print(const char *x) { for (int i = 0; x[i]; i++)putchar(x[i]); }
+
+#ifdef _GLIBCXX_STRING
+
+    inline bool read(std::string &s) {
+        s = "";
+        char ch;
+        while (ch = getchar(), isspace(ch));
+        if (ch == EOF)return false;
+        while (!isspace(ch))s += ch, ch = getchar();
+        return true;
+    }
+
+    inline void print(std::string x) { for (int i = 0, n = x.size(); i < n; i++)putchar(x[i]); }
+
+#endif
+
+    template<typename T, typename...T1>
+    inline int read(T &a, T1 &...other) { return read(a) + read(other...); }
+
+    template<typename T, typename...T1>
+    inline void print(T a, T1...other) {
+        print(a);
+        print(other...);
+    }
+
+    struct Fast_IO {
+        ~Fast_IO() { fwrite(obuf, p3 - obuf, 1, stdout); }
+    } io;
+
+    template<typename T>
+    Fast_IO &operator>>(Fast_IO &io, T &b) { return read(b), io; }
+
+    template<typename T>
+    Fast_IO &operator<<(Fast_IO &io, T b) { return print(b), io; }
+}
+using namespace fast_IO;
+const int inf = 1e9 + 7;
+const ll INF = 1e18 + 7;
+namespace Code {
+    const int N = 2e4 + 7;
+    int n, m, q, so[N], arr[N];
+    int bit[N], t1[N], t2[N];
+
+    inline void Modify(int x, int c) {
+        for (int i = x; i <= m; i += i & -i) {
+            bit[i] += c;
+        }
+    }
+
+    inline int Ask(int x) {
+        int val = 0;
+        for (int i = x; i; i -= i & -i) {
+            val += bit[i];
+        }
+        return val;
+    }
+
+    signed main() {
+        io >> n;
+        REP(i, 1, n)io >> arr[i], so[i] = arr[i];
+        std::sort(so + 1, so + n + 1);
+        m = unique(so + 1, so + n + 1) - so - 1;
+        REP(i, 1, n) {
+            arr[i] = lower_bound(so + 1, so + m + 1, arr[i]) - so;
+        }
+        int Sum = 0;
+        REP(i, 1, n) {
+            Modify(arr[i], 1);
+            Sum += i - Ask(arr[i]);
+        }
+        io << Sum << '\n';
+        int l, r;
+        io >> q;
+        REP(i, 1, q) {
+            io >> l >> r;
+            if (l > r)swap(l, r);
+            Sum+=(arr[l] < arr[r])-(arr[l] > arr[r]);
+            REP(j, l + 1, r - 1) {
+                Sum += (arr[r] > arr[j])+(arr[l] < arr[j])-(arr[r] < arr[j])-(arr[l] > arr[j]);
+            }
+            swap(arr[l], arr[r]);
+            io << Sum << '\n';
+        }
+        return 0;
+    }
+}
+
+signed main() {
+//	freopen("std.in","r",stdin);
+//    freopen("oiaioooooiai.out", "w", stdout);
+    Code::main();
+    return 0;
+}
+    ```
   </code>
   <script src="https://cdn.jsdelivr.net/npm/marked@3.0.0/marked.min.js"></script>
   <script>
